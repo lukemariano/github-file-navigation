@@ -16,7 +16,13 @@
               <tbody>
                 <tr v-for="content in files" :key="content.number">
                   <td class="text-left" v-if="content.type == 'dir'">
-                    <v-btn x-small color="primary"> {{ content.name }} </v-btn>
+                    <v-btn
+                      x-small
+                      color="primary"
+                      @click="getNewPath(content.path)"
+                    >
+                      {{ content.name }}
+                    </v-btn>
                   </td>
                   <td v-else class="text-left">{{ content.name }}</td>
                   <td class="text-left">{{ content.type }}</td>
@@ -34,6 +40,11 @@
         color="primary"
       ></v-progress-circular>
     </v-row>
+    <v-row>
+      <v-btn v-if="newPath.length > 0" class="mb-5" @click="back">
+        Voltar
+      </v-btn>
+    </v-row>
   </div>
 </template>
 
@@ -45,6 +56,7 @@ export default {
   props: ["repo"],
   data: () => ({
     files: [],
+    newPath: [],
     loading: false,
   }),
 
@@ -52,6 +64,31 @@ export default {
     async listFiles() {
       this.loading = true;
       this.files = await api.getFiles(this.repo.owner.login, this.repo.name);
+      this.loading = false;
+    },
+
+    async getNewPath(path) {
+      this.loading = true;
+      this.files = await api.getNewPath(
+        this.repo.owner.login,
+        this.repo.name,
+        path
+      );
+
+      this.newPath.push(path);
+      this.loading = false;
+    },
+
+    async back() {
+      this.loading = true;
+      this.newPath.pop();
+      let pastPath =
+        this.newPath.length == 1 ? this.newPath[0] : this.newPath[-1];
+      this.files = await api.getNewPath(
+        this.repo.owner.login,
+        this.repo.name,
+        pastPath
+      );
       this.loading = false;
     },
   },
@@ -65,3 +102,5 @@ export default {
   },
 };
 </script>
+
+[pandas] 0

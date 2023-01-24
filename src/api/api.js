@@ -17,6 +17,8 @@ async function fetch_all_pages(url) {
   return result;
 }
 
+let pathUrl = null;
+
 export const api = {
   async getUsers(searchString) {
     const response = await fetch(
@@ -41,5 +43,23 @@ export const api = {
     const url = `https://api.github.com/repos/${owner}/${reponame}/contents/`;
     const response = await fetch(url);
     return await response.json();
+  },
+
+  async getNewPath(owner, reponame, path) {
+    // debugger;
+    const url = `https://api.github.com/repos/${owner}/${reponame}/contents/${path}`;
+    const response = await fetch(url);
+    return await response.json();
+
+    // if (!pathUrl) {
+    //   const url = `https://api.github.com/repos/${owner}/${reponame}/contents/${dirName}/`;
+    //   pathUrl = url;
+    //   const response = await fetch(url);
+    //   return await response.json();
+    // } else {
+    //   pathUrl += `${dirName}/`;
+    //   const response = await fetch(pathUrl);
+    //   return await response.json();
+    // }
   },
 };
