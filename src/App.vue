@@ -1,36 +1,28 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
+    <v-app-bar app color="black" dark>
       <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+        <v-btn
+          icon
+          href="https://github.com/lukemariano/github-file-navigation"
+          target="_blank"
+        >
+          <v-icon>mdi-github</v-icon></v-btn
+        >
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
+        <span class="text-h6"
+          ><strong class=""> Github Vuewer - Lucas Mariano</strong></span
+        >
       </div>
 
       <v-spacer></v-spacer>
 
       <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
+        icon
+        href="https://www.linkedin.com/in/lucas-mariano-da-silva-luke/"
         target="_blank"
-        text
+        ><v-icon>mdi-linkedin</v-icon></v-btn
       >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
     </v-app-bar>
 
     <v-main>
