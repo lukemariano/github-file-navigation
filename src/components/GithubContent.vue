@@ -4,6 +4,7 @@
   <div>
     <v-row class="text-center">
       <v-col cols="12">
+        <div>{{ currentPath }}</div>
         <template>
           <v-simple-table>
             <template v-slot:default>
@@ -58,6 +59,7 @@ export default {
     files: [],
     newPath: [],
     loading: false,
+    currentPath: null,
   }),
 
   methods: {
@@ -76,6 +78,7 @@ export default {
       );
 
       this.newPath.push(path);
+      this.currentPath = path;
       this.loading = false;
     },
 
@@ -92,6 +95,8 @@ export default {
         this.repo.name,
         pastPath
       );
+
+      this.currentPath = pastPath;
       this.loading = false;
     },
   },
