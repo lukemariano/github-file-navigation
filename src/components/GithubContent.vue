@@ -84,6 +84,9 @@ export default {
       this.newPath.pop();
       let pastPath =
         this.newPath.length == 1 ? this.newPath[0] : this.newPath[-1];
+      if (pastPath == undefined) {
+        pastPath = "";
+      }
       this.files = await api.getNewPath(
         this.repo.owner.login,
         this.repo.name,
@@ -95,6 +98,7 @@ export default {
 
   watch: {
     repo() {
+      this.newPath = [];
       this.listFiles();
     },
 
@@ -102,5 +106,3 @@ export default {
   },
 };
 </script>
-
-[pandas] 0
