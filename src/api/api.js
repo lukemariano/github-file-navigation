@@ -26,7 +26,11 @@ export const api = {
     );
     return await response.json();
   },
-  // pesquisa repo:  https://api.github.com/users/USERNAME/repos
+  async getUserInfo(username) {
+    const url = `https://api.github.com/users/${username}`;
+    const response = await fetch(url);
+    return await response.json();
+  },
   async getRepos(username) {
     const url = `https://api.github.com/users/${username}/repos`;
     const data = await fetch_all_pages(url);
@@ -46,20 +50,8 @@ export const api = {
   },
 
   async getNewPath(owner, reponame, path) {
-    // debugger;
     const url = `https://api.github.com/repos/${owner}/${reponame}/contents/${path}`;
     const response = await fetch(url);
     return await response.json();
-
-    // if (!pathUrl) {
-    //   const url = `https://api.github.com/repos/${owner}/${reponame}/contents/${dirName}/`;
-    //   pathUrl = url;
-    //   const response = await fetch(url);
-    //   return await response.json();
-    // } else {
-    //   pathUrl += `${dirName}/`;
-    //   const response = await fetch(pathUrl);
-    //   return await response.json();
-    // }
   },
 };

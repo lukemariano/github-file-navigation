@@ -34,6 +34,59 @@
         ></v-select>
       </v-col>
     </v-row>
+    <template>
+      <v-row justify="center">
+        <v-expansion-panels v-if="userInfo" :value="0" accordion>
+          <v-expansion-panel>
+            <v-expansion-panel-header>
+              <span><strong>User info:</strong> {{ userInfo.login }}</span>
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <div>
+                <v-row>
+                  <v-col cols="6">
+                    <v-img
+                      max-height="210"
+                      max-width="238"
+                      :src="userInfo.avatar_url"
+                    ></v-img>
+                    <span class="mt-5">
+                      <strong>Name:</strong> {{ userInfo.name }}</span
+                    >
+                  </v-col>
+                  <v-col cols="6">
+                    <ul>
+                      <li>
+                        <strong>Location:</strong> {{ userInfo.location }}
+                      </li>
+                      <li v-if="userInfo.company">
+                        <strong>Company:</strong> {{ userInfo.company }}
+                      </li>
+                      <li><strong>Bio:</strong> {{ userInfo.bio }}</li>
+                      <li>
+                        <strong>Repos:</strong> {{ userInfo.public_repos }}
+                      </li>
+                      <li>
+                        <strong>Followers:</strong> {{ userInfo.followers }}
+                      </li>
+                    </ul>
+                  </v-col>
+                </v-row>
+              </div>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+          <v-expansion-panel>
+            <v-expansion-panel-header>Repo info</v-expansion-panel-header>
+            <v-expansion-panel-content>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat.
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
+      </v-row>
+    </template>
   </div>
 </template>
 
@@ -50,6 +103,7 @@ export default {
     searchUser: null,
     repoList: [],
     userList: [],
+    userInfo: null,
     repoLoading: false,
     userLoading: false,
   }),
@@ -72,6 +126,11 @@ export default {
 
       this.repoLoading = false;
     },
+
+    async searchUserInfo() {
+      const data = await api.getUserInfo(this.user);
+      this.userInfo = data;
+    },
   },
 
   watch: {
@@ -85,6 +144,7 @@ export default {
     user() {
       if (this.user) {
         this.getRepository();
+        this.searchUserInfo();
       }
     },
 
