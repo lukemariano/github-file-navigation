@@ -4,33 +4,48 @@
   <div>
     <v-row class="text-center">
       <v-col cols="12">
-        <div>{{ currentPath }}</div>
+        <div></div>
         <template>
-          <v-simple-table>
-            <template v-slot:default>
-              <thead>
-                <tr>
-                  <th class="text-left">Repository Files</th>
-                  <th class="text-left">File Type</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="content in files" :key="content.number">
-                  <td class="text-left" v-if="content.type == 'dir'">
-                    <v-btn
-                      x-small
-                      color="primary"
-                      @click="getNewPath(content.path)"
-                    >
-                      {{ content.name }}
-                    </v-btn>
-                  </td>
-                  <td v-else class="text-left">{{ content.name }}</td>
-                  <td class="text-left">{{ content.type }}</td>
-                </tr>
-              </tbody>
-            </template>
-          </v-simple-table>
+          <v-row justify="center">
+            <v-expansion-panels v-if="repo" :value="0" accordion>
+              <v-expansion-panel>
+                <v-expansion-panel-header>
+                  <span><strong>Repository:</strong> {{ repo.name }}</span>
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  <template>
+                    <v-simple-table>
+                      <template v-slot:default>
+                        <thead>
+                          <tr>
+                            <th class="text-left">Files</th>
+                            <th class="text-left">File Type</th>
+                            <th class="text-left">Path</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="content in files" :key="content.number">
+                            <td class="text-left" v-if="content.type == 'dir'">
+                              <v-btn
+                                x-small
+                                color="primary"
+                                @click="getNewPath(content.path)"
+                              >
+                                {{ content.name }}
+                              </v-btn>
+                            </td>
+                            <td v-else class="text-left">{{ content.name }}</td>
+                            <td class="text-left">{{ content.type }}</td>
+                            <td class="text-left">{{ currentPath }}</td>
+                          </tr>
+                        </tbody>
+                      </template>
+                    </v-simple-table>
+                  </template>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+            </v-expansion-panels>
+          </v-row>
         </template>
       </v-col>
     </v-row>
@@ -104,6 +119,7 @@ export default {
   watch: {
     repo() {
       this.newPath = [];
+      this.currentPath = null;
       this.listFiles();
     },
 
