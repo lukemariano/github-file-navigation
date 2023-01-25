@@ -13,6 +13,9 @@
                   <span><strong>Repository:</strong> {{ repo.name }}</span>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
+                  <span v-if="currentPath" class="text-left mb-3 mt-3"
+                    >Path Navigation: <strong>{{ currentPath }}</strong></span
+                  >
                   <template>
                     <v-simple-table>
                       <template v-slot:default>
@@ -31,12 +34,17 @@
                                 color="primary"
                                 @click="getNewPath(content.path)"
                               >
-                                {{ content.name }}
+                                <v-icon>mdi-folder</v-icon> {{ content.name }}
                               </v-btn>
                             </td>
-                            <td v-else class="text-left">{{ content.name }}</td>
+                            <td v-else class="text-left">
+                              <v-icon>mdi-file</v-icon> {{ content.name }}
+                            </td>
                             <td class="text-left">{{ content.type }}</td>
-                            <td class="text-left">{{ currentPath }}</td>
+                            <td class="text-left" v-if="currentPath">
+                              {{ currentPath }}
+                            </td>
+                            <td class="text-left" v-else>./</td>
                           </tr>
                         </tbody>
                       </template>
